@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b2d4d">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Contractor Push Admin</title>
+</head>
+<body class="admin-body">
+  <main class="admin-shell">
+    <a class="back-link" href="/">← Back to customer app</a>
+
+    <section class="admin-header">
+      <span class="hero-badge">CONTRACTOR DEMO</span>
+      <h1>Send a Push Notification</h1>
+      <p>Send a real notification to devices that subscribed through the Smith Heating & Air demo.</p>
+    </section>
+
+    <section class="admin-card">
+      <label>
+        Admin Key
+        <input id="adminKey" type="password" placeholder="Enter the ADMIN_SECRET from Netlify">
+      </label>
+
+      <label>
+        Notification Title
+        <input id="title" value="Smith Heating & Air">
+      </label>
+
+      <label>
+        Message
+        <textarea id="body" rows="4">Cold weather is coming. Schedule your fall HVAC maintenance today.</textarea>
+      </label>
+
+      <label>
+        Open this URL when tapped
+        <input id="url" value="/">
+      </label>
+
+      <label>
+        Audience
+        <select id="contractorId">
+          <option value="smith-hvac">All Smith Heating & Air demo subscribers</option>
+        </select>
+      </label>
+
+      <button id="sendBtn" class="send-btn">Send Push Notification</button>
+      <div id="sendStatus" class="send-status"></div>
+    </section>
+
+    <section class="admin-help">
+      <strong>Demo workflow</strong>
+      <ol>
+        <li>Open the customer PWA on your phone.</li>
+        <li>Tap <b>Enable Notifications</b> and allow permission.</li>
+        <li>Return here on your computer.</li>
+        <li>Enter your Netlify <code>ADMIN_SECRET</code> and click Send.</li>
+      </ol>
+    </section>
+  </main>
+<script src="/admin.js"></script>
+</body>
+</html>

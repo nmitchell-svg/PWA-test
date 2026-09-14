@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b2d4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Comfort Hub">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Smith Heating & Air | Comfort Hub</title>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">❄</div>
+      <div>
+        <span class="eyebrow">Your Home Comfort App</span>
+        <h1>Smith Heating & Air</h1>
+      </div>
+    </div>
+    <button class="install-btn" id="installBtn">⬇ Install App</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-badge">LOCAL • LICENSED • DEPENDABLE</div>
+      <h2>Comfort help is just a tap away.</h2>
+      <p>Request service, schedule maintenance, check current specials, or call our team anytime.</p>
+      <div class="hero-actions">
+        <a class="primary-cta" href="#service">🔧 Request Service</a>
+        <a class="secondary-cta" href="tel:+15555550148">☎ Call (555) 555-0148</a>
+      </div>
+    </section>
+
+    <section class="notification-card">
+      <div class="notification-copy">
+        <span class="section-kicker">Stay Connected</span>
+        <h3>Get helpful HVAC reminders</h3>
+        <p>Turn on notifications for maintenance reminders, service updates, and occasional specials.</p>
+      </div>
+      <button class="notify-btn" id="notifyBtn">🔔 Enable Notifications</button>
+      <div class="notification-status" id="notificationStatus">Notifications are currently off.</div>
+    </section>
+
+    <section class="quick-grid">
+      <a class="action-card" href="#maintenance">
+        <div class="action-icon">📅</div>
+        <div class="action-copy"><strong>Schedule Maintenance</strong><span>Keep your system running its best</span></div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="action-card accent" href="#specials">
+        <div class="action-icon">💵</div>
+        <div class="action-copy"><strong>Current Specials</strong><span>See available savings & financing</span></div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="action-card" href="#plan">
+        <div class="action-icon">✓</div>
+        <div class="action-copy"><strong>Maintenance Plan</strong><span>Priority service and member perks</span></div>
+        <span class="chevron">›</span>
+      </a>
+      <a class="action-card" href="#review">
+        <div class="action-icon">★</div>
+        <div class="action-copy"><strong>Leave a Review</strong><span>Tell us how we did</span></div>
+        <span class="chevron">›</span>
+      </a>
+    </section>
+
+    <section class="system-card">
+      <div class="system-head">
+        <div><span class="section-kicker">Your HVAC System</span><h3>Home Comfort Status</h3></div>
+        <span class="status-pill">All Good</span>
+      </div>
+      <div class="system-row">
+        <div><span class="meta-label">Next recommended maintenance</span><strong>October 2026</strong></div>
+        <span class="row-icon">📅</span>
+      </div>
+      <div class="divider"></div>
+      <div class="system-row">
+        <div><span class="meta-label">Plan status</span><strong>Priority Comfort Member</strong></div>
+        <span class="row-icon">✓</span>
+      </div>
+    </section>
+
+    <section class="promo-card" id="specials">
+      <div class="promo-copy">
+        <span class="promo-label">Featured Offer</span>
+        <h3>Financing Available on New Systems</h3>
+        <p>Ask about flexible payment options for qualifying heating and cooling replacements.</p>
+        <a href="#learn">View Offer ›</a>
+      </div>
+      <div class="promo-icon">💲</div>
+    </section>
+
+    <section class="demo-note">
+      <span>⚙</span>
+      <div>
+        <strong>Push Demo Ready</strong>
+        <p>After setup, subscribe this device here, then open the contractor admin page to send a real push notification.</p>
+        <a class="admin-link" href="/admin.html">Open Contractor Admin →</a>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <a class="active" href="#">⌂<span>Home</span></a>
+    <a href="#service">🔧<span>Service</span></a>
+    <a href="tel:+15555550148">☎<span>Call</span></a>
+  </nav>
+</div>
+
+<div class="modal-backdrop hidden" id="iosModal">
+  <div class="install-modal">
+    <div class="modal-icon">⬇</div>
+    <h3>Install on iPhone</h3>
+    <p>Tap the <strong>Share</strong> button in Safari, then choose <strong>Add to Home Screen</strong>.</p>
+    <button id="closeModal">Got It</button>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
