@@ -9,53 +9,51 @@
 </head>
 <body class="admin-body">
   <main class="admin-shell">
-    <a class="back-link" href="/">← Back to customer app</a>
+    <a class="back-link" href="/">← Back to platform home</a>
 
     <section class="admin-header">
-      <span class="hero-badge">CONTRACTOR DEMO</span>
+      <span class="hero-badge">PUSH PLATFORM</span>
       <h1>Send a Push Notification</h1>
-      <p>Send a real notification to devices that subscribed through the Smith Heating & Air demo.</p>
+      <p>Send a notification to subscribers for a specific contractor. The contractor ID must match the ID used by that contractor's PWA.</p>
     </section>
 
     <section class="admin-card">
       <label>
-        Admin Key
-        <input id="adminKey" type="password" placeholder="Enter the ADMIN_SECRET from Netlify">
+        Contractor ID
+        <input id="contractorId" type="text" value="demo9-hvac" placeholder="e.g. demo9-hvac" autocomplete="off">
       </label>
 
       <label>
         Notification Title
-        <input id="title" value="Smith Heating & Air">
+        <input id="title" value="Demo HVAC" placeholder="e.g. Demo HVAC">
       </label>
 
       <label>
         Message
-        <textarea id="body" rows="4">Cold weather is coming. Schedule your fall HVAC maintenance today.</textarea>
+        <textarea id="body" rows="4">Your Demo HVAC app is connected! Tap here to return to the app.</textarea>
       </label>
 
       <label>
         Open this URL when tapped
-        <input id="url" value="/">
+        <input id="url" type="url" value="https://demo9.myhvacweb.com/app-download" placeholder="https://example.com/app-download">
       </label>
 
       <label>
-        Audience
-        <select id="contractorId">
-          <option value="smith-hvac">All Smith Heating & Air demo subscribers</option>
-        </select>
+        Admin Key
+        <input id="adminKey" type="password" placeholder="Enter the ADMIN_SECRET from Netlify" autocomplete="current-password">
       </label>
 
       <button id="sendBtn" class="send-btn">Send Push Notification</button>
-      <div id="sendStatus" class="send-status"></div>
+      <div id="sendStatus" class="send-status" aria-live="polite"></div>
     </section>
 
     <section class="admin-help">
-      <strong>Demo workflow</strong>
+      <strong>How targeting works</strong>
       <ol>
-        <li>Open the customer PWA on your phone.</li>
-        <li>Tap <b>Enable Notifications</b> and allow permission.</li>
-        <li>Return here on your computer.</li>
-        <li>Enter your Netlify <code>ADMIN_SECRET</code> and click Send.</li>
+        <li>Enter the contractor ID assigned to the website, such as <code>demo9-hvac</code>.</li>
+        <li>The platform finds only subscriptions with that <code>contractor_id</code>.</li>
+        <li>Enter the notification and destination URL.</li>
+        <li>Enter your Netlify <code>ADMIN_SECRET</code> and send.</li>
       </ol>
     </section>
   </main>
