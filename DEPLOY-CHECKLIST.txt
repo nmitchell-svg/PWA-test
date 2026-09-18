@@ -1,0 +1,70 @@
+MASTER CONTRACTOR PWA — DEPLOYMENT CHECKLIST
+Reference implementation: Demo9
+
+CENTRAL PLATFORM — ONE-TIME / SHARED
+[ ] GitHub root contains netlify/functions, public/admin, supabase, netlify.toml, package files
+[ ] Netlify deploy is Published
+[ ] SUPABASE_URL configured
+[ ] SUPABASE_SERVICE_ROLE_KEY configured as secret
+[ ] VAPID_PUBLIC_KEY configured
+[ ] VAPID_PRIVATE_KEY configured as secret
+[ ] VAPID_SUBJECT configured
+[ ] ADMIN_SECRET configured as secret
+[ ] ALLOWED_ORIGINS contains each contractor origin (comma-separated)
+[ ] ALLOWED_CONTRACTOR_IDS contains each contractor ID (comma-separated)
+[ ] Supabase push_subscriptions table exists
+[ ] Supabase push_subscriptions.site_origin column exists
+[ ] /admin/ loads the multi-contractor sender
+
+EACH CONTRACTOR WEBSITE
+[ ] Create customer-facing page in website platform (HTML/CSS stays platform-controlled)
+[ ] Choose unique contractorId
+[ ] Add contractor origin to Netlify ALLOWED_ORIGINS
+[ ] Add contractorId to Netlify ALLOWED_CONTRACTOR_IDS
+[ ] Redeploy Netlify after environment-variable changes
+[ ] Upload /app/app-pwa.js
+[ ] Upload /app/app.webmanifest
+[ ] Upload /app/icon-192.png
+[ ] Upload /app/icon-512.png
+[ ] Upload root-level /app-sw.js
+[ ] Customize app.webmanifest name, short_name, description, start_url, colors and icons
+[ ] start_url points to the CMS customer-app page (Demo9: /app-download)
+[ ] manifest scope is / when using the root service worker/CMS URL pattern
+[ ] Add manifest and apple-touch-icon tags to page head
+[ ] Add window.CONTRACTOR_PWA config to page
+[ ] serviceWorkerUrl is /app-sw.js
+[ ] serviceWorkerScope is /
+[ ] Add /app/app-pwa.js script
+[ ] Add data-pwa-install to install button(s)
+[ ] Add data-pwa-notifications to notification button(s)
+[ ] Put visible button text in a child with data-pwa-label
+[ ] Optional: add data-pwa-notification-status and data-pwa-install-help
+
+BUTTON STATE TEST
+[ ] Before install: button says Add to Home Screen
+[ ] In installed app: button says ✓ Added to Home Screen and is disabled
+[ ] Before push permission: button says Enable Notifications
+[ ] After successful subscription: button says ✓ Notifications Enabled and is disabled
+
+END-TO-END TEST
+[ ] Open customer app page on phone
+[ ] Add/install to Home Screen
+[ ] Open installed app
+[ ] Confirm install button shows ✓ Added to Home Screen
+[ ] Enable notifications
+[ ] Confirm notification button shows ✓ Notifications Enabled
+[ ] Confirm Supabase row has correct contractor_id and site_origin
+[ ] Open central Netlify /admin/
+[ ] Enter correct contractor ID
+[ ] Send test push
+[ ] Confirm notification arrives
+[ ] Tap notification and confirm intended contractor URL opens
+
+DEMO9 REFERENCE
+Page: https://demo9.myhvacweb.com/app-download
+Contractor ID: demo9-hvac
+Static assets: /app/
+Service worker: /app-sw.js
+Service worker scope: /
+Manifest start_url: /app-download
+Manifest scope: /

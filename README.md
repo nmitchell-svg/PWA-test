@@ -1,136 +1,78 @@
-# Contractor PWA Push Notification Demo
+# Master Headless Contractor PWA
 
-This version adds **real Web Push notifications** to the contractor PWA demo.
+This is the reference deployment package proven with Demo9. The contractor website platform owns **all visible HTML and CSS**. The PWA package supplies installation metadata, service-worker behavior, push subscription logic, and the shared multi-contractor Netlify/Supabase backend.
 
-## What is included
+## Proven Demo9 layout
 
-- Installable PWA
-- Customer-facing **Enable Notifications** button
-- Service worker push listener
-- Supabase table for browser/device subscriptions
-- Netlify Function to save subscriptions
-- Netlify Function to send push notifications
-- Simple contractor admin sender at `/admin.html`
-- Stale subscription cleanup for 404/410 push endpoints
+- Customer page: `https://demo9.myhvacweb.com/app-download`
+- Contractor ID: `demo9-hvac`
+- Static PWA assets: `/app/`
+- Service worker: `/app-sw.js`
+- Service-worker scope: `/`
+- Manifest start URL: `/app-download`
+- Central admin: Netlify `/admin/`
 
----
+The root service worker is required because the CMS page URL is not a physical upload directory. The supplied service worker does not cache or rewrite the normal website; it is used for push events and notification clicks.
 
-## 1. Create the Supabase table
+## Contractor website files
 
-Open your Supabase SQL editor and run:
+Upload:
 
-`supabase/push_subscriptions.sql`
+- `/app/app-pwa.js`
+- `/app/app.webmanifest`
+- `/app/icon-192.png`
+- `/app/icon-512.png`
+- `/app-sw.js` at the site root
 
-The browser never talks directly to Supabase in this demo. Netlify Functions use the Supabase service-role key on the server.
+There is intentionally no contractor `index.html` or `styles.css`.
 
----
+## HTML hooks
 
-## 2. Generate your VAPID keys
+Use `WEBSITE-PLATFORM-SNIPPET.html` as the reference. Available hooks:
 
-On your computer, inside this project folder:
+- `data-pwa-install` — install/add-to-home-screen action
+- `data-pwa-notifications` — enable Web Push
+- `data-pwa-label` — recommended child span for dynamic button text
+- `data-pwa-notification-status` — optional status text
+- `data-pwa-install-help` — optional manual install instructions
 
-```bash
-npm install
-npm run generate:vapid
-```
+When the app is running as an installed PWA, the install button changes to **✓ Added to Home Screen** and becomes disabled. When a valid push subscription exists with notification permission granted, the notification button changes to **✓ Notifications Enabled** and becomes disabled.
 
-Copy the two generated keys.
+Use `data-pwa-label` inside styled buttons so the script changes only the text and leaves Bootstrap glyphicons/custom markup intact.
 
-**Never commit the VAPID private key to Git.**
+## Central platform
 
----
+The `platform/` directory contains the shared Netlify Functions and multi-contractor admin. When updating the existing GitHub project, deploy the **contents** of `platform/` at the repository root; do not create a nested `/platform/` directory.
 
-## 3. Add Netlify environment variables
+The production `public/` directory only needs the current `admin/` sender. Old single-contractor demo files such as `public/admin.html`, `public/admin.js`, `public/app.js`, `public/sw.js`, and the old customer demo should not be kept.
 
-In your Netlify site, add these environment variables and make sure they are available to Functions:
+Required Netlify environment variables:
 
 - `SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (secret)
 - `VAPID_PUBLIC_KEY`
-- `VAPID_PRIVATE_KEY`
-- `VAPID_SUBJECT` — example: `mailto:you@yourdomain.com`
-- `ADMIN_SECRET` — choose a strong random password
+- `VAPID_PRIVATE_KEY` (secret)
+- `VAPID_SUBJECT`
+- `ADMIN_SECRET` (secret)
+- `ALLOWED_ORIGINS`
+- `ALLOWED_CONTRACTOR_IDS`
 
-Use `.env.example` as a reference.
+For multiple contractors, the final two values are comma-separated lists.
 
-After adding/changing environment variables, redeploy the site.
+## Per-client changes
 
----
+1. Create the customer app page in your website platform.
+2. Choose a unique contractor ID.
+3. Add the website origin and contractor ID to Netlify.
+4. Customize the manifest (`name`, `short_name`, `description`, `start_url`, colors).
+5. Replace both icons.
+6. Add the snippet/config to the CMS page.
+7. Test install, push subscription, Supabase row, and a targeted notification from `/admin/`.
 
-## 4. Deploy
+## Installed-state note
 
-Because this demo includes Netlify Functions, deploy it through a Git-connected Netlify site or the Netlify CLI rather than using a static-only drag-and-drop deployment.
+Installed-state detection is strongest while the customer is using the installed PWA. The script also records successful browser install events when supported. Browsers do not provide one universal API that lets an ordinary webpage reliably enumerate every installed PWA, so a browser tab may not always be able to detect an installation performed manually on every platform.
 
-The included `netlify.toml` uses:
+## Security
 
-- Publish folder: `public`
-- Functions folder: `netlify/functions`
-
----
-
-## 5. Test the full flow
-
-### On your phone
-
-1. Open the deployed HTTPS URL.
-2. Install the PWA.
-3. Open the installed app.
-4. Tap **Enable Notifications**.
-5. Allow notification permission.
-
-### On your computer
-
-1. Open:
-   `https://YOUR-SITE.netlify.app/admin.html`
-2. Enter the same value you configured as `ADMIN_SECRET`.
-3. Edit the title/message.
-4. Click **Send Push Notification**.
-5. The subscribed phone should receive the notification.
-
----
-
-## iPhone
-
-For iPhone/iPad, install the PWA to the Home Screen first:
-
-Safari → Share → Add to Home Screen
-
-Then open the installed Home Screen app and tap **Enable Notifications**.
-
----
-
-## Customize the contractor
-
-The demo currently uses:
-
-`contractorId = smith-hvac`
-
-Change that in `public/app.js` and in the admin page if you want a different demo company.
-
-You can also update:
-
-- Company name
-- Phone number
-- Logo/icons
-- App colors
-- Promotional copy
-- Notification copy
-- Destination links
-
----
-
-## Production notes
-
-This is intentionally a small sales/demo implementation.
-
-Before turning it into a multi-contractor production product, add:
-
-- Real contractor authentication instead of one shared `ADMIN_SECRET`
-- Contractor/user ownership in the database
-- Notification preferences/categories
-- Unsubscribe controls
-- Rate limiting
-- Send history/audit log
-- Segmentation
-- Scheduled sends
-- Consent/privacy copy appropriate for your business
+Never place `SUPABASE_SERVICE_ROLE_KEY`, `VAPID_PRIVATE_KEY`, or `ADMIN_SECRET` in contractor website code. Those remain server-side in Netlify.
